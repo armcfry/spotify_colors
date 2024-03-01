@@ -1,9 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import reportWebVitals from './reportWebVitals';
-import Connection from './components/connection.tsx'
-import PageRoutes from './page_router.tsx'
 import App from './App.tsx'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
