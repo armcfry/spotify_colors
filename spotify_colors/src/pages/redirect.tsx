@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 // get access token from loacl storage
 function getAccessToken() {
   const token = window.localStorage.getItem('access_token');
-  console.log(`getting token: ${token}`);
+  // console.log(`getting token: ${token}`);
   return token;
 }
 
