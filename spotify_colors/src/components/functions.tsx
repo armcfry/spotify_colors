@@ -1,47 +1,36 @@
 import React from "react"
 import { useNavigate, useLocation } from 'react-router-dom';
 
-// connect to spotify api
-// get data
-// return data
-// code verifier
+export function setCV (codeVerifier: string) {
+    window.localStorage.setItem('code_verifier', codeVerifier);
+}
 
-// var response;
-// const clientId = '47a20135bab4443fba6e9752a550095c';
-// const redirectUri = 'http://localhost:3000/#/redirect';
-// const scope = 'user-read-private user-read-email';
-// const authUrl = new URL("https://accounts.spotify.com/authorize")
-const generateRandomString = (length) => {
+export function getCV() {
+    return window.localStorage.getItem('code_verifier');
+}
+
+export function generateRandomString(length) {
     const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     const values = crypto.getRandomValues(new Uint8Array(length));
     return values.reduce((acc, x) => acc + possible[x % possible.length], "");
 }
 
-const codeVerifier = generateRandomString(64);
+//code challenge
+export async function sha256(plain) {
+    const encoder = new TextEncoder()
+    const data = encoder.encode(plain)
+    return window.crypto.subtle.digest('SHA-256', data)
+}
 
-export async function connectionThings(clientId: string,
-                                        scope: string,
-                                        redirectUri: string,
-                                        authUrl: URL): Promise<string> {
-    //code challenge
-    const sha256 = async (plain) => {
-        const encoder = new TextEncoder()
-        const data = encoder.encode(plain)
-        return window.crypto.subtle.digest('SHA-256', data)
-    }
+export function base64encode(input) {
+    return btoa(String.fromCharCode(...new Uint8Array(input)))
+        .replace(/=/g, '')
+        .replace(/\+/g, '-')
+        .replace(/\//g, '_');
+}
 
-    const base64encode = (input) => {
-        return btoa(String.fromCharCode(...new Uint8Array(input)))
-            .replace(/=/g, '')
-            .replace(/\+/g, '-')
-            .replace(/\//g, '_');
-    }
-    const hashed = await sha256(codeVerifier)
-    const codeChallenge = base64encode(hashed);
-
-    // generated in the previous step
+export async function getParams(clientId: string, scope: string, redirectUri: string, codeVerifier: string, codeChallenge) {
     window.localStorage.setItem('code_verifier', codeVerifier);
-
     const params = {
         response_type: 'code',
         client_id: clientId,
@@ -50,22 +39,10 @@ export async function connectionThings(clientId: string,
         code_challenge: codeChallenge,
         redirect_uri: redirectUri,
     }
-
-    authUrl.search = new URLSearchParams(params).toString();
-
-    // window.location.href = authUrl.toString();
-
-    // const urlParams = new URLSearchParams(window.location.search);
-    // let code = urlParams.get('code');
-    // return (typeof code == "string") ? code : "null";
-    return "please hold"
+    return params;
 }
 
-export async function getToken(code, clientId, redirectUri): Promise<string> {
-
-    // stored in the previous step
-    // let codeVerifier = localStorage.getItem('code_verifier');
-
+export async function getToken(code, clientId, redirectUri, codeVerifier): Promise<string> {
     const payload = {
         method: 'POST',
         headers: {
@@ -82,8 +59,8 @@ export async function getToken(code, clientId, redirectUri): Promise<string> {
 
     const body = await fetch('https://accounts.spotify.com/api/token', payload);
     let response = await body.json();
-    console.log(response);
+    console.log(`response: ${response.access_token}`);
 
-    // localStorage.setItem('access_token', response.access_token);
+    window.localStorage.setItem('access_token', response.access_token);
     return response.access_token;
 }; 
