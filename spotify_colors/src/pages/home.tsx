@@ -31,7 +31,7 @@ function Home() {
 
     if (token) {
         // console.log(`token exists, will navigate: ${token}`);
-        return <Navigate to="/redirect" />;
+        return <Navigate to="/results" />;
     }
     
     const handleClickAsync = async () => {
