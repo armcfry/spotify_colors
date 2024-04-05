@@ -4,7 +4,7 @@ import { Navigate } from "react-router-dom";
 
 const clientId = '47a20135bab4443fba6e9752a550095c';
 const redirectUri = 'http://localhost:3000';
-const scope = 'user-read-private user-read-email';
+const scope = 'user-read-private user-read-email user-top-read';
 const authUrl = new URL("https://accounts.spotify.com/authorize");
 const urlParams = new URLSearchParams(window.location.search);
 let code = urlParams.get('code');

@@ -1,6 +1,3 @@
-import React from "react"
-import { useNavigate, useLocation } from 'react-router-dom';
-
 export function setCV (codeVerifier: string) {
     window.localStorage.setItem('code_verifier', codeVerifier);
 }
