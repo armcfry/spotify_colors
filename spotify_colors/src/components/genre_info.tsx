@@ -35,6 +35,27 @@ function getGenres(artists) {
     return top_genre;
 }
 
+// make enum that maps distinct colors to genres
+enum GenreColors {
+    "alternative" = "#FF0000",
+    "ambient" = "#FFA500",
+    "blues" = "#FFFF00",
+    "classical" = "#008000",
+    "country" = "#0000FF",
+    "dance" = "#4B0082",
+    "disco" = "#EE82EE",
+    "hip-hop" = "#FF1493",
+    "jazz" = "#FFD700",
+    "metal" = "#00FFFF",
+    "pop" = "#00FF00",
+    "reggae" = "#800080",
+    "rock" = "#000000",
+    "soul" = "#808080",
+    "techno" = "#C0C0C0",
+    "trance" = "#FFFFFF",
+}
+
+
 function GenreInfo(token: string) {
     const [genre, setgenre] = useState("");
 
@@ -59,14 +80,19 @@ function GenreInfo(token: string) {
       backfaceVisibility: "invisible !important",
       // animate for only 2 seconds
       animation: "flip 2s ease",
-      animationDuration: "1.3s"
+      animationDuration: "1s"
     };
     // for genre in genres return a card with the genre name
     // and the number of artists with that genre
+    // change the card color to the color associated with the genre
+    // if genre is not in the enum, default to black
+    let color = GenreColors[genre] || "#000000";
+    flip_style["backgroundColor"] = color;
+    
     return (
       <div className="main-body">
-          <div className="card" style={flip_style as React.CSSProperties}>
-            <div className="card-body">
+          <div className="card-2x" style={flip_style as React.CSSProperties}>
+            <div className="card-body" >
               <div className="d-flex flex-column align-items-center text-center">
                 <div className="mt-3">
                   <h4>{genre}</h4>
