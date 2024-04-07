@@ -44,22 +44,3 @@
     min-height: 1px;
     padding: 1rem;
 }
-
-.GenreColors {
-    alternative: #FF0000,
-    ambient = #FFA500,
-    blues = #FFFF00,
-    classical = #008000,
-    country = #0000FF,
-    dance = #4B0082,
-    disco = #EE82EE,
-    hip-hop = #FF1493,
-    jazz = #FFD700,
-    metal = #00FFFF,
-    pop = #00FF00,
-    reggae = #800080,
-    rock = #000000,
-    soul = #808080,
-    techno = #C0C0C0,
-    trance = #FFFFFF,
-}
