@@ -1,0 +1,40 @@
+/* center button component */
+.authenticate-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 75px;
+    width: 200px;
+    transition: all 0.3s ease;
+    background-color: #3a12a9;
+    border-radius: 50px;
+    cursor: pointer;
+    color: rgb(255, 255, 255);
+    font-size: 15px;
+    font-weight: 600;
+    text-shadow: 0 1px .2px rgba(255, 255, 255, 0.2);
+    margin: 0 auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    border: 3px solid #ab72e7;
+
+    &:hover {
+        background-color: #1e0a57;
+        color: rgb(255, 255, 255);
+        border: 3px solid #ffffff;
+        /* box-shadow: 0 10px 20px rgb(255, 255, 255); */
+        transform: translateY(-3px);
+        box-shadow: 0 15px 20px rgba(0, 0, 0, 0.4);
+    }
+}
+
+  /* make a button container that is  300 x 300 */
+.center-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 300px;
+    width: 300px;
+    margin: 0 auto;
+}

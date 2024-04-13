@@ -1,26 +1,39 @@
-import React from "react"
+import React, {useState, useEffect} from "react"
 import { getParams, getToken, sha256, generateRandomString, base64encode, getCV, setCV } from "../components/functions.tsx";
 import { Navigate } from "react-router-dom";
+import "./home.css";
 
 const clientId = '47a20135bab4443fba6e9752a550095c';
 const redirectUri = 'http://localhost:3000';
-const scope = 'user-read-private user-read-email';
+const scope = 'user-read-private user-read-email user-top-read';
 const authUrl = new URL("https://accounts.spotify.com/authorize");
 const urlParams = new URLSearchParams(window.location.search);
 let code = urlParams.get('code');
 
-async function callForToken(code){
+async function callForToken(code: string){
     const codeVerifier = getCV();
-    console.log(`code verifier at get token: ${codeVerifier}`);
+    // console.log(`code verifier at get token: ${codeVerifier}`);
     return await getToken(code, clientId, redirectUri, codeVerifier);
 }
 
 function Home() {
-    if (code) {
-        let token = callForToken(code);
-        return <Navigate to="/redirect" />;
-    };
+    const [token, setToken] = useState<string|null> (null);
 
+    useEffect(() => {
+        const fetchAndSetToken = async () => {
+            if (code) {
+                const token = await callForToken(code);
+                setToken(token);
+                // console.log(`token: ${token}`);
+            }
+        };
+        fetchAndSetToken();
+    }, []);
+
+    if (token) {
+        // console.log(`token exists, will navigate: ${token}`);
+        return <Navigate to="/results" />;
+    }
     
     const handleClickAsync = async () => {
         const codeVerifier = generateRandomString(64);
@@ -34,11 +47,20 @@ function Home() {
         window.location.href = authUrl.toString();
     };
 
-    return (
-        <h1>
-            <button onClick={handleClickAsync}>Authenticate with Spotify</button>
-        </h1>
-    );
+    if (!code){
+        return (
+            <div className="center-container">
+                <button className="authenticate-button" onClick={handleClickAsync}>Authenticate with Spotify</button>
+            </div> 
+        );
+    } else {
+        // TODO: eventually add animation here
+        return (
+            <div className="center-container">
+                <h1>loading...</h1>
+            </div>
+        );
+    }
 };
 
 

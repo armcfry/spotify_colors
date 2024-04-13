@@ -1,6 +1,3 @@
-import React from "react"
-import { useNavigate, useLocation } from 'react-router-dom';
-
 export function setCV (codeVerifier: string) {
     window.localStorage.setItem('code_verifier', codeVerifier);
 }
@@ -59,7 +56,7 @@ export async function getToken(code, clientId, redirectUri, codeVerifier): Promi
 
     const body = await fetch('https://accounts.spotify.com/api/token', payload);
     let response = await body.json();
-    console.log(`response: ${response.access_token}`);
+    // console.log(`response: ${response.access_token}`);
 
     window.localStorage.setItem('access_token', response.access_token);
     return response.access_token;
