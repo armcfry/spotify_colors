@@ -26,7 +26,6 @@ function Results() {
     <div className="grid-container">
       <div className="grid-item">{Profile(token)}</div>
       <div className="grid-item-large">{GenreInfo(token)}</div>
-      
     </div> 
   );
 }

@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react"
 import { getParams, getToken, sha256, generateRandomString, base64encode, getCV, setCV } from "../components/functions.tsx";
 import { Navigate } from "react-router-dom";
+import "./home.css";
 
 const clientId = '47a20135bab4443fba6e9752a550095c';
 const redirectUri = 'http://localhost:3000';
@@ -48,16 +49,16 @@ function Home() {
 
     if (!code){
         return (
-            <h1>
-                <button onClick={handleClickAsync}>Authenticate with Spotify</button>
-            </h1>
+            <div className="center-container">
+                <button className="authenticate-button" onClick={handleClickAsync}>Authenticate with Spotify</button>
+            </div> 
         );
     } else {
         // TODO: eventually add animation here
         return (
-            <h1>
-                loading...
-            </h1>
+            <div className="center-container">
+                <h1>loading...</h1>
+            </div>
         );
     }
 };
